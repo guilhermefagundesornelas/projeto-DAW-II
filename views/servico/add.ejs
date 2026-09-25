@@ -1,0 +1,50 @@
+<%-include('../cabecalho.ejs')%>
+<h1>Adicionar Serviço</h1>
+<div>
+<a href="/servico/lst">Listar</a>
+</div>
+<div>
+    <form  method="post" enctype="multipart/form-data">
+        <label>Nome:</label>
+        <input type="text" name="nome" required><br>
+        <label>Categoria:</label>
+        <select name="categoria" id="categoria">
+            <option value="">selecione</option>
+            <%Categorias.forEach(function(categoria){%>
+            <option value='<%=categoria.id%>'><%=categoria.nome%></option>
+            <%})%>
+        </select><br>
+        <label>Profissional:</label>
+        <select name="profissional" id="profissional">
+            <option value="">selecione</option>
+            <%Profissionais.forEach(function(profissional){%>
+            <option value='<%=profissional.id%>'><%=profissional.nome%></option>
+            <%})%>
+        </select><br>
+        <label>Cliente:</label>
+        <select name="cliente" id="cliente">
+            <option value="">selecione</option>
+            <%Clientes.forEach(function(cliente){%>
+            <option value='<%=cliente.id%>'><%=cliente.nome%></option>
+            <%})%>
+        </select><br>
+        <label>Preço:</label>
+        <input type="number" name="preco" required><br>
+        <label>Duração:</label>
+        <input type="time" name="duracao" required><br>
+        <label>Disponível:</label>
+        <select name="dispo" id="dispo">
+            <option disabled selected value="">selecione</option>
+            <option value="sim">Sim</option>
+            <option value="nao">Não</option>
+        </select><br>
+        <label>Descrição:</label>
+        <input type="text" name="desc" required><br>
+        <label>Foto:</label>
+        <input type="file" id="foto" name="foto"><br>
+        <button type="submit">Cadastrar</button>
+
+    </form>
+</div>
+
+<%-include('../rodape.ejs')%>

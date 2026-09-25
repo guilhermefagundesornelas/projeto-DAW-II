@@ -1,0 +1,53 @@
+<%-include('../cabecalho.ejs')%>
+<h1>Editar Serviço</h1>
+<div>
+<a href="/servico/lst">Ver Lista de Serviços</a>
+</div>
+<div>
+    <form  method="post" enctype="multipart/form-data">
+
+        <label>Nome:</label>
+        <input type="text" name="nome"
+        value="<%=Servico.nome%>" required><br>
+        <label>Categoria:</label>
+        <select name="categoria" id="categoria">
+            <option value="">selecione</option>
+            <%Categorias.forEach(function(categoria){%>
+            <option value='<%=categoria.id%>'
+            <%=(Servico.categoria && categoria.id.toString() === Servico.categoria.toString())?'selected':''%>>
+            <%=categoria.nome%></option>
+            <%})%>
+        </select><br>
+        <label>Profissional:</label>
+        <select name="profissional" id="profissional">
+            <option value="">selecione</option>
+            <%Profissionais.forEach(function(profissional){%>
+            <option value='<%=profissional.id%>'
+            <%=(Servico.profissional && profissional.id.toString() === Servico.profissional.toString())?'selected':''%>>
+            <%=profissional.nome%></option>
+            <%})%>
+        </select><br>
+        <label>Cliente:</label>
+        <select name="cliente" id="cliente">
+            <option value="">selecione</option>
+            <%Clientes.forEach(function(cliente){%>
+            <option value='<%=cliente.id%>'
+            <%=(Servico.cliente && cliente.id.toString() === Servico.cliente.toString())?'selected':''%>>
+            <%=cliente.nome%></option>
+            <%})%>
+        </select><br>
+        <label>Preço:</label>
+        <input type="number" name="preco"
+        value="<%=Servico.preco%>" required><br>
+        <label>Foto atual:</label><br>
+        <% if(Servico.foto){ %>
+            <img src="<%=Servico.foto%>" width="150" height="150"><br>
+        <% } %>
+        <label>Trocar foto:</label>
+        <input type="file" id="foto" name="foto" required><br>
+        <button type="submit">Editar</button>
+
+    </form>
+</div>
+
+<%-include('../rodape.ejs')%>

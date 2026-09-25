@@ -1,0 +1,22 @@
+<%-include('../cabecalho.ejs')%>
+    <h1>Profissionais</h1>
+    <a href="/profissional/add">+ Profissional</a>
+    <table>
+        <tr>
+            <td>Nome</td>
+            <td>Especialidade</td>
+            <td>Anos de Experiência</td>
+            <td>Ações</td>
+        </tr>
+
+        <%for (const {id, nome, especialidade, anosExperiencia} of profissionais) {%>
+        <tr>
+            <td><%=nome%></td>
+            <td><%=especialidade%></td>
+            <td><%=anosExperiencia%></td>
+            <td><a href="/profissional/edt/<%=id%>">Editar</a>
+            <a href="/profissional/del/<%=id%>">Excluir</a></td>
+        </tr>
+        <%}%>
+    </table>
+ <%-include('../rodape.ejs')%>
