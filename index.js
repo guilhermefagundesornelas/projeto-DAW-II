@@ -6,6 +6,7 @@ import servicoRoutes from './routes/servicoRoute.js'; // rotas externas
 import categoriaRoutes from './routes/categoriaRoute.js'; // rotas externas
 import profissionalRoutes from './routes/profissionalRoute.js'; // rotas externas
 import clienteRoutes from './routes/clienteRoute.js'; // rotas externas
+import siteRoutes from './routes/siteRoute.js'; // rotas externas
 
 const PORT = 3000
 const app = express();
@@ -18,7 +19,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Servir arquivos estáticos
-app.use(express.static(join(__dirname, '/public')));
+app.use(express.static(join(__dirname, 'public')));
 app.set('views', join(__dirname, '/views'));
 
 // Rotas
@@ -27,6 +28,7 @@ app.use(servicoRoutes)
 app.use(categoriaRoutes)
 app.use(profissionalRoutes)
 app.use(clienteRoutes)
+app.use(siteRoutes)
 app.listen(PORT, ()=>{
  console.log(
     `Servidor rodando em http://localhost:${PORT}`)

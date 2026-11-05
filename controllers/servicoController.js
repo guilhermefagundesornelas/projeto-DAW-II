@@ -99,7 +99,10 @@ export default class servicoController{
                 fotoEnviada = req.file.buffer
             }
             else{
-                fotoEnviada = null
+                //se nao mandou foto nova, mantem a que ja existia
+                //(lean() traz o Buffer puro, sem passar pelo get do model)
+                const servicoAtual = await Servico.findById(req.params.id).lean()
+                fotoEnviada = servicoAtual.foto
             }
 
             await Servico.findByIdAndUpdate(req.params.id, {

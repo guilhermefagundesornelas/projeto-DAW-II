@@ -39,12 +39,23 @@
         <label>Preço:</label>
         <input type="number" name="preco"
         value="<%=Servico.preco%>" required><br>
+        <label>Duração:</label>
+        <input type="time" name="duracao"
+        value="<%=Servico.duracao%>" required><br>
+        <label>Disponível:</label>
+        <select name="dispo" id="dispo" required>
+            <option value="sim" <%=(Servico.dispo === 'sim')?'selected':''%>>Sim</option>
+            <option value="nao" <%=(Servico.dispo === 'nao')?'selected':''%>>Não</option>
+        </select><br>
+        <label>Descrição:</label>
+        <input type="text" name="desc"
+        value="<%=Servico.desc%>" required><br>
         <label>Foto atual:</label><br>
         <% if(Servico.foto){ %>
             <img src="<%=Servico.foto%>" width="150" height="150"><br>
         <% } %>
-        <label>Trocar foto:</label>
-        <input type="file" id="foto" name="foto" required><br>
+        <label>Trocar foto (opcional):</label>
+        <input type="file" id="foto" name="foto"><br>
         <button type="submit">Editar</button>
 
     </form>

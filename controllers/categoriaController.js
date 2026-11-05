@@ -20,6 +20,13 @@ export default class categoriaController{
             const resultado = await Categoria.find({})
             res.render(caminhoBase + 'lst', {categorias:resultado})
         }
+        this.find = async(req, res)=>{
+            const filtro = req.body.filtro;
+            const resultado = await
+            Categoria.find({ nome: { $regex: filtro,
+                $options: "i" }})
+            res.render(caminhoBase + 'lst', {categorias:resultado})
+        }
 
         this.openEdt = async(req, res)=>{
             //passar quem eu quero editar

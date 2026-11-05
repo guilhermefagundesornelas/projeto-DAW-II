@@ -6,6 +6,9 @@ const Servico = conexao.Schema({
     profissional:{type: conexao.Types.ObjectId, ref:"Profissional", required:false},
     cliente:{type: conexao.Types.ObjectId, ref:"Cliente", required:false},
     preco:{type:Number, required:true},
+    duracao:{type:String, required:true},
+    dispo:{type:String, required:true},
+    desc:{type:String, required:true},
     foto:{type:Buffer,
         get: (valor) => {
             if (!valor) return null;

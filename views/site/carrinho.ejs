@@ -1,0 +1,7 @@
+<%- include('cabecalho.ejs') %>
+  <main id="conteudo" class="page container">
+    <div class="page-heading"><span class="kicker">Quase lá</span><h1>Seu carrinho</h1><p>Revise os serviços antes de continuar.</p></div>
+    <div class="empty-cart" data-empty-cart hidden><div class="empty-icon">C</div><h1>Seu carrinho está vazio</h1><p>Encontre serviços de confiança e adicione tudo o que precisa.</p><a class="primary-button" href="/site/servicos">Explorar serviços →</a></div>
+    <div class="cart-layout" data-cart-layout hidden><div class="cart-list" data-cart-list></div><aside class="summary"><h2>Resumo</h2><div><span>Subtotal</span><strong data-subtotal>R$ 0,00</strong></div><div><span>Taxa de serviço</span><strong data-fee>R$ 0,00</strong></div><hr><div class="total"><span>Total</span><strong data-total>R$ 0,00</strong></div><button class="primary-button" data-checkout>Ir para pagamento →</button></aside></div>
+  </main>
+<%- include('rodape.ejs') %>
