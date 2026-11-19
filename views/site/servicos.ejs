@@ -1,17 +1,49 @@
-<%- include('cabecalho.ejs') %>
+<%-include('cabecalho.ejs')%>
   <main id="conteudo" class="page container">
-    <div class="page-heading"><span class="kicker">Encontre seu profissional</span><h1>Todos os serviços</h1><p>Compare opções, avaliações e escolha o atendimento ideal para você.</p></div>
-    <div class="catalog-toolbar"><div class="catalog-search"><span aria-hidden="true">⌕</span><input data-catalog-search aria-label="Pesquisar serviços" placeholder="Pesquisar serviços ou profissionais"></div><select data-category-filter aria-label="Filtrar por categoria"><option>Todos</option><option>Casa e limpeza</option><option>Beleza e bem-estar</option><option>Reparos e manutenção</option><option>Saúde e cuidados</option><option>Gastronomia</option><option>Cuidados com pets</option></select></div>
-    <div class="results-line"><strong data-results>6 serviços encontrados</strong><span>Ordenados por relevância</span></div>
+    <div class="page-heading"><span class="kicker">Encontre seu profissional</span><h1><%=titulo%></h1><p>Compare opções, avaliações e escolha o atendimento ideal para você.</p></div>
+    <form class="catalog-toolbar" action="/site/servicos" method="post">
+      <div class="catalog-search"><span aria-hidden="true">⌕</span><input name="q" value="<%=q%>" aria-label="Pesquisar serviços" placeholder="Pesquisar serviços"></div>
+      <select name="categoria" aria-label="Filtrar por categoria">
+        <option value="">Todos</option>
+        <% categorias.forEach(function(categoria){ %>
+        <option value="<%=categoria.id%>" <%=categoriaSel === categoria.id ? 'selected' : ''%>><%=categoria.nome%></option>
+        <% }) %>
+      </select>
+      <button class="outline-button" type="submit">Filtrar</button>
+    </form>
+    <div class="results-line"><strong><%=servicos.length%> <%=servicos.length === 1 ? 'serviço encontrado' : 'serviços encontrados'%></strong><a href="/site/servicos">Limpar filtros</a></div>
     <div class="service-grid catalog">
-      <article class="service-card" data-service-card data-category="Casa e limpeza"><div class="service-image"><img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=700&q=85" alt="Profissional realizando limpeza residencial"><span>Casa e limpeza</span></div><div class="service-content"><div class="rating"><b>★</b> 4,9 (127)</div><h3>Limpeza residencial completa</h3><p class="professional">por <strong>Mariana Souza</strong></p><div class="service-meta"><span>4 horas</span><strong>R$ 180,00</strong></div><button class="outline-button" data-add="1">Adicionar ao carrinho +</button></div></article>
-      <article class="service-card" data-service-card data-category="Reparos e manutenção"><div class="service-image"><img src="https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?auto=format&fit=crop&w=700&q=85" alt="Ferramenta para reparos residenciais"><span>Reparos e manutenção</span></div><div class="service-content"><div class="rating"><b>★</b> 4,8 (94)</div><h3>Instalação e pequenos reparos</h3><p class="professional">por <strong>Carlos Mendes</strong></p><div class="service-meta"><span>2 horas</span><strong>R$ 120,00</strong></div><button class="outline-button" data-add="2">Adicionar ao carrinho +</button></div></article>
-      <article class="service-card" data-service-card data-category="Beleza e bem-estar"><div class="service-image"><img src="https://images.unsplash.com/photo-1745327883508-b6cd32e5dde5?auto=format&fit=crop&w=700&q=85" alt="Terapeuta realizando massagem"><span>Beleza e bem-estar</span></div><div class="service-content"><div class="rating"><b>★</b> 5,0 (81)</div><h3>Massagem relaxante</h3><p class="professional">por <strong>Ana Ribeiro</strong></p><div class="service-meta"><span>1 hora</span><strong>R$ 145,00</strong></div><button class="outline-button" data-add="3">Adicionar ao carrinho +</button></div></article>
-      <article class="service-card" data-service-card data-category="Gastronomia"><div class="service-image"><img src="https://images.unsplash.com/photo-1556911073-52527ac43761?auto=format&fit=crop&w=700&q=85" alt="Chef preparando alimentos frescos"><span>Gastronomia</span></div><div class="service-content"><div class="rating"><b>★</b> 4,9 (63)</div><h3>Chef em casa</h3><p class="professional">por <strong>Paula Nunes</strong></p><div class="service-meta"><span>3 horas</span><strong>R$ 240,00</strong></div><button class="outline-button" data-add="4">Adicionar ao carrinho +</button></div></article>
-      <article class="service-card" data-service-card data-category="Beleza e bem-estar"><div class="service-image"><img src="https://images.unsplash.com/photo-1761931403671-d020a14928d9?auto=format&fit=crop&w=700&q=85" alt="Cabeleireiro cortando cabelo"><span>Beleza e bem-estar</span></div><div class="service-content"><div class="rating"><b>★</b> 4,7 (112)</div><h3>Corte e escova</h3><p class="professional">por <strong>Lucas Lima</strong></p><div class="service-meta"><span>1h30</span><strong>R$ 95,00</strong></div><button class="outline-button" data-add="5">Adicionar ao carrinho +</button></div></article>
-      <article class="service-card" data-service-card data-category="Casa e limpeza"><div class="service-image"><img src="https://images.unsplash.com/photo-1646980241033-cd7abda2ee88?auto=format&fit=crop&w=700&q=85" alt="Profissional com materiais de limpeza"><span>Casa e limpeza</span></div><div class="service-content"><div class="rating"><b>★</b> 4,8 (56)</div><h3>Limpeza pós-obra</h3><p class="professional">por <strong>Equipe Brilho</strong></p><div class="service-meta"><span>6 horas</span><strong>R$ 320,00</strong></div><button class="outline-button" data-add="6">Adicionar ao carrinho +</button></div></article>
+      <% servicos.forEach(function(servico){ %>
+        <%
+          const nomeCategoria = servico.categoria ? servico.categoria.nome : 'Sem categoria'
+          const nomeProfissional = servico.profissional ? servico.profissional.nome : ''
+        %>
+        <article class="service-card">
+          <div class="service-image">
+            <% if (servico.foto) { %><img src="<%=servico.foto%>" alt="<%=servico.nome%>"><% } %>
+            <span><%=nomeCategoria%></span>
+          </div>
+          <div class="service-content">
+            <h3><%=servico.nome%></h3>
+            <% if (nomeProfissional) { %><p class="professional">por <strong><%=nomeProfissional%></strong></p><% } %>
+            <p class="professional"><%=servico.desc%></p>
+            <div class="service-meta">
+              <span><%=servico.duracao%></span>
+              <strong>R$ <%=servico.preco%></strong>
+            </div>
+            <button class="outline-button"
+              data-add="<%=servico.id%>"
+              data-nome="<%=servico.nome%>"
+              data-categoria="<%=nomeCategoria%>"
+              data-profissional="<%=nomeProfissional%>"
+              data-duracao="<%=servico.duracao%>"
+              data-preco="<%=servico.preco%>">Adicionar ao carrinho +</button>
+          </div>
+        </article>
+      <% }) %>
     </div>
-    <div class="empty-state" data-no-results hidden><h2>Nenhum serviço encontrado</h2><p>Tente buscar por outro termo ou categoria.</p></div>
+    <% if (servicos.length === 0) { %>
+    <div class="empty-state"><h2>Nenhum serviço encontrado</h2><p>Tente buscar por outro termo ou categoria.</p></div>
+    <% } %>
   </main>
-<%- include('rodape.ejs') %>
-
+<%-include('rodape.ejs')%>

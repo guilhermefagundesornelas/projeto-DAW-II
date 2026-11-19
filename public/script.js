@@ -1,12 +1,7 @@
 (function () {
-  const services = {
-    1: { id: 1, name: 'Limpeza residencial completa', category: 'Casa e limpeza', professional: 'Mariana Souza', duration: '4 horas', price: 180, image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=500&q=80' },
-    2: { id: 2, name: 'Instalação e pequenos reparos', category: 'Reparos e manutenção', professional: 'Carlos Mendes', duration: '2 horas', price: 120, image: 'https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?auto=format&fit=crop&w=500&q=80' },
-    3: { id: 3, name: 'Massagem relaxante', category: 'Beleza e bem-estar', professional: 'Ana Ribeiro', duration: '1 hora', price: 145, image: 'https://images.unsplash.com/photo-1745327883508-b6cd32e5dde5?auto=format&fit=crop&w=500&q=80' },
-    4: { id: 4, name: 'Chef em casa', category: 'Gastronomia', professional: 'Paula Nunes', duration: '3 horas', price: 240, image: 'https://images.unsplash.com/photo-1556911073-52527ac43761?auto=format&fit=crop&w=500&q=80' },
-    5: { id: 5, name: 'Corte e escova', category: 'Beleza e bem-estar', professional: 'Lucas Lima', duration: '1h30', price: 95, image: 'https://images.unsplash.com/photo-1761931403671-d020a14928d9?auto=format&fit=crop&w=500&q=80' },
-    6: { id: 6, name: 'Limpeza pós-obra', category: 'Casa e limpeza', professional: 'Equipe Brilho', duration: '6 horas', price: 320, image: 'https://images.unsplash.com/photo-1646980241033-cd7abda2ee88?auto=format&fit=crop&w=500&q=80' },
-  }
+  // dados dos serviços que o usuário colocou no carrinho (vêm dos cards, que vêm do banco)
+  const getServices = () => JSON.parse(localStorage.getItem('servilar-services') || '{}')
+  const saveServices = (services) => localStorage.setItem('servilar-services', JSON.stringify(services))
 
   const money = (value) => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
   const getCart = () => JSON.parse(localStorage.getItem('servilar-cart') || '[]')
@@ -50,8 +45,12 @@
 
   document.querySelectorAll('[data-add]').forEach((button) => {
     button.addEventListener('click', () => {
+      const d = button.dataset
+      const services = getServices()
+      services[d.add] = { id: d.add, name: d.nome, category: d.categoria, professional: d.profissional, duration: d.duracao, price: Number(d.preco) }
+      saveServices(services)
       const cart = getCart()
-      cart.push(Number(button.dataset.add))
+      cart.push(d.add)
       saveCart(cart)
       toast('Serviço adicionado ao carrinho')
     })
@@ -93,7 +92,8 @@
   const cartList = document.querySelector('[data-cart-list]')
   const renderCart = () => {
     if (!cartList) return
-    const cart = getCart()
+    const services = getServices()
+    const cart = getCart().filter((id) => services[id])
     const empty = document.querySelector('[data-empty-cart]')
     const layout = document.querySelector('[data-cart-layout]')
     empty?.toggleAttribute('hidden', cart.length !== 0)
@@ -103,8 +103,7 @@
     cartList.innerHTML = Object.entries(quantities).map(([id, qty]) => {
       const item = services[id]
       return `<article class="cart-item">
-        <img src="${item.image}" alt="Imagem do serviço ${item.name}">
-        <div class="cart-info"><span>${item.category}</span><h2>${item.name}</h2><p>com ${item.professional} · ${item.duration}</p><button data-remove="${id}">Remover</button></div>
+        <div class="cart-info"><span>${item.category}</span><h2>${item.name}</h2><p>${item.professional ? 'com ' + item.professional + ' · ' : ''}${item.duration}</p><button data-remove="${id}">Remover</button></div>
         <div class="quantity"><button aria-label="Diminuir quantidade" data-minus="${id}">−</button><span>${qty}</span><button aria-label="Aumentar quantidade" data-plus="${id}">+</button></div>
         <strong>${money(item.price * qty)}</strong>
       </article>`
@@ -113,9 +112,9 @@
     document.querySelector('[data-subtotal]').textContent = money(subtotal)
     document.querySelector('[data-fee]').textContent = money(subtotal * .05)
     document.querySelector('[data-total]').textContent = money(subtotal * 1.05)
-    document.querySelectorAll('[data-plus]').forEach((b) => b.onclick = () => { const c = getCart(); c.push(Number(b.dataset.plus)); saveCart(c); renderCart() })
-    document.querySelectorAll('[data-minus]').forEach((b) => b.onclick = () => { const c = getCart(); c.splice(c.indexOf(Number(b.dataset.minus)), 1); saveCart(c); renderCart() })
-    document.querySelectorAll('[data-remove]').forEach((b) => b.onclick = () => { saveCart(getCart().filter((id) => id !== Number(b.dataset.remove))); renderCart() })
+    document.querySelectorAll('[data-plus]').forEach((b) => b.onclick = () => { const c = getCart(); c.push(b.dataset.plus); saveCart(c); renderCart() })
+    document.querySelectorAll('[data-minus]').forEach((b) => b.onclick = () => { const c = getCart(); c.splice(c.indexOf(b.dataset.minus), 1); saveCart(c); renderCart() })
+    document.querySelectorAll('[data-remove]').forEach((b) => b.onclick = () => { saveCart(getCart().filter((id) => id !== b.dataset.remove)); renderCart() })
   }
   renderCart()
 

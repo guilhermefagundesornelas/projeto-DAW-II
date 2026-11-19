@@ -1,13 +1,10 @@
-<%- include('cabecalho.ejs') %>
+<%-include('cabecalho.ejs')%>
+  <main id="conteudo" class="page container">
     <div class="page-heading"><span class="kicker">Tudo em um só lugar</span><h1>Navegue por categorias</h1><p>Do cuidado com a casa ao seu bem-estar, encontre ajuda especializada.</p></div>
     <div class="category-page-grid">
-      <a class="category-feature" href="/site/servicos?categoria=Casa%20e%20limpeza"><span class="category-icon">CL</span><div><h2>Casa e limpeza</h2><p>32 profissionais e serviços disponíveis</p></div><span class="arrow">→</span></a>
-      <a class="category-feature" href="/site/servicos?categoria=Beleza%20e%20bem-estar"><span class="category-icon" style="background:#fae8f1">BE</span><div><h2>Beleza e bem-estar</h2><p>28 profissionais e serviços disponíveis</p></div><span class="arrow">→</span></a>
-      <a class="category-feature" href="/site/servicos?categoria=Reparos%20e%20manuten%C3%A7%C3%A3o"><span class="category-icon" style="background:#e6f3ef">RM</span><div><h2>Reparos e manutenção</h2><p>24 profissionais e serviços disponíveis</p></div><span class="arrow">→</span></a>
-      <a class="category-feature" href="/site/servicos?categoria=Sa%C3%BAde%20e%20cuidados"><span class="category-icon" style="background:#fbe9e4">SC</span><div><h2>Saúde e cuidados</h2><p>19 profissionais e serviços disponíveis</p></div><span class="arrow">→</span></a>
-      <a class="category-feature" href="/site/servicos?categoria=Gastronomia"><span class="category-icon" style="background:#fff0d9">GA</span><div><h2>Gastronomia</h2><p>16 profissionais e serviços disponíveis</p></div><span class="arrow">→</span></a>
-      <a class="category-feature" href="/site/servicos?categoria=Cuidados%20com%20pets"><span class="category-icon" style="background:#e4effb">CP</span><div><h2>Cuidados com pets</h2><p>21 profissionais e serviços disponíveis</p></div><span class="arrow">→</span></a>
-      <a class="category-feature" href="/site/servicos"><span class="category-icon">TI</span><div><h2>Tecnologia</h2><p>14 profissionais e serviços disponíveis</p></div><span class="arrow">→</span></a>
+      <% categorias.forEach(function(categoria){ %>
+      <a class="category-feature" href="/site/servicos/<%=categoria.id%>"><span class="category-icon">★</span><div><h2><%=categoria.nome%></h2><p>Ver serviços desta categoria</p></div><span class="arrow">→</span></a>
+      <% }) %>
     </div>
   </main>
-<%- include('rodape.ejs') %>
+<%-include('rodape.ejs')%>

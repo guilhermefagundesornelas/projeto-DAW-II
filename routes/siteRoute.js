@@ -8,6 +8,8 @@ const caminhobase = 'site/'
 
 router.get('/' + caminhobase , controle.index)
 router.get('/' + caminhobase + 'servicos', controle.servicos)
+router.get('/' + caminhobase + 'servicos/:categoria', controle.servicos)
+router.post('/' + caminhobase + 'servicos', controle.filtrar)
 router.get('/' + caminhobase + 'categorias', controle.categorias)
 router.get('/' + caminhobase + 'carrinho', controle.carrinho)
 router.post('/' + caminhobase + 'carrinho', controle.carrinho)

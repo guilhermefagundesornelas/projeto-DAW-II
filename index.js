@@ -19,7 +19,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Servir arquivos estáticos
-app.use(express.static(join(__dirname, 'public')));
+app.use(express.static(join(__dirname, '/public')));
 app.set('views', join(__dirname, '/views'));
 
 // Rotas
@@ -33,3 +33,5 @@ app.listen(PORT, ()=>{
  console.log(
     `Servidor rodando em http://localhost:${PORT}`)
 });
+// Exporta o handler compatível com Vercel
+export default app;

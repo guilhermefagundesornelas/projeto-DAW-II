@@ -220,3 +220,6 @@ footer nav a { display:block; color:#aaa2b0; font-size:.7rem; margin:10px 0; }
   .footer-bottom { flex-direction:column; gap:8px; }
   .toast { left:14px; right:14px; bottom:14px; text-align:center; }
 }
+
+/* fundo para quando o serviço ainda não tem foto */
+.service-image { min-height:194px; background:#eee6fb; }
